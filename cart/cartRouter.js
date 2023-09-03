@@ -4,9 +4,9 @@ const cartModel = require('./cartModel')
 const {addProductInCart , getUserCart , deleteUserCart} = require('./cartController')
 const { UserAuthorized } = require('../middleware');
 
-router.post('/cart/:userid' , addProductInCart)
-router.get('/cart/:userid' , getUserCart)
-router.delete('/cart/:userid' , deleteUserCart)
+router.post('/cart/:id', UserAuthorized ,addProductInCart)
+router.get('/cart/:id' , getUserCart)
+router.delete('/cart/:id' , deleteUserCart)
 
 
 module.exports = router

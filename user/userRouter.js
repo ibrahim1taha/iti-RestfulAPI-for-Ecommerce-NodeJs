@@ -7,6 +7,10 @@ const { signup , login ,updateUser} = require('./userController')
 
 router.post('/signup',
     validate([
+        body('Name')
+            .isString()
+            .isLength({min:3 , max : 30})
+            .withMessage('Name must be string and minimum 3 character'), 
         body('email')
             .isEmail()
             .withMessage('invalid Email'),

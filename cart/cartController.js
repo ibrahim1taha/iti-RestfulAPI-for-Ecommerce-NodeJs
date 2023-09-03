@@ -2,24 +2,25 @@ const express = require('express');
 const customError = require('../CustomError')
 const cartModel = require('./cartModel')
 const productModel = require('../Products/productModel')
+const bcrypt = require('bcrypt')
 
 const addProductInCart = async (req, res , next) => {
     try{
         const {productId , count} = req.body ; 
         const product = await productModel.findById(productId)   
-        const findUserCart = await cartModel.findOne({userId : req.params.userid})
+        const findUserCart = await cartModel.findOne({userId : req.params.id})
         var arr = [] ;
-        
+        console.log("ehhhhhhhhhhhhhhhhhhhhhhhh")
         if(!findUserCart){
             
             let price = +product.price * +count; 
             const newCart = await cartModel.create({
-                userId : req.params.userid,  
+                userId : req.params.id,  
                 productId : product.productName, 
                 count , 
                 totalPrice : price
             });
-            res.status(200).send(newCart) ;
+            res.status(200).send("product add to the cart") ;
             
         }
         else{
@@ -33,7 +34,7 @@ const addProductInCart = async (req, res , next) => {
                 totalPrice : total
 
             })
-            res.status(200).send(updateCart)
+            res.status(200).send("product add to the cart")
         }
     }catch{
         next(customError({

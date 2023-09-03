@@ -24,6 +24,11 @@ const validate = validations => {
 
 const authorized = async (req , res, next)=>{
     const{authorization : token} = req.headers  ;
+    if(!token) 
+        next(customError({
+            statusCode : 404 ,
+            message : "Admin only can add product"  
+        }))
     const decoded = await asyncverfiy(token , process.env.secretkey)
     if(decoded.isAdmin !== true){
         next(customError({
@@ -36,6 +41,8 @@ const authorized = async (req , res, next)=>{
 const UserAuthorized = async (req , res, next)=>{
     const{authorization : token} = req.headers  ;
     const decoded = await asyncverfiy(token , process.env.secretkey)
+    console.log(decoded.id)
+    console.log(req.params.id)
     if(decoded.id !== req.params.id){
         next(customError({
             statusCode : 401 , 

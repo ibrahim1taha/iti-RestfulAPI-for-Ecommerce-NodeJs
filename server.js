@@ -13,23 +13,6 @@ app.use('/' ,productRouter)
 app.use('/user' ,userRouter)
 app.use('/', cartRouter)
 
-// "email" : "aadddddddddddddddddddaa@a.com", 
-// "Name": "iibarhim", 
-// "userName" : "gvdddddddddddddbddsnvgh" , 
-// "password" : "ibr.12345" , 
-// "phoneNumber" : "01199026010" , 
-// "address" : "aboswar", 
-// "isAdmin": false
-
-
-// "productName" : "iphone 15", 
-// "price": 400 , 
-// "description" : "gvdddddddddddddbddsnvgh" , 
-// "countInStock" : 15
-
-//login admin 
-// "email" :"ibrahim@gmail.com" , 
-// "password" : "ibt.99026010"
 app.use((err , req ,res ,next)=>{
     res.status(err.status).send({
         message : err.message

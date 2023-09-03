@@ -5,7 +5,7 @@ const {addProduct , getProducts ,getProductById , deleteProduct ,updateProduct} 
 const { authorized } = require('../middleware');
 
 router.post("/product", authorized ,  addProduct) 
-router.get('/product' , authorized , getProducts)
+router.get('/product' , getProducts)
 router.get('/product/:id' , authorized , getProductById)
 router.delete('/product/:id' , authorized , deleteProduct)
 router.patch('/product/:id' , authorized , updateProduct)

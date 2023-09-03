@@ -36,7 +36,7 @@ const login = async (req, res, next) => {
             message: "Password or Email is not correct..!"
         }))
     } else {
-        const comparePassword = bcrypt.compare(password, findUser.password)
+        const comparePassword = await bcrypt.compare(password, findUser.password)
         if (comparePassword) {
             const token = await findUser.generateToken();
             res.status(200).send({ token: token })
@@ -51,31 +51,25 @@ const login = async (req, res, next) => {
 
 const updateUser = async (req, res, next) => {
     try {
-        const { email, Name, userName, password, phoneNumber, address, isAdmin } = req.body;
+        const {Name, userName, address, isAdmin} = req.body;
         /////////////////  
-        const existingUser = await userModel.findOne().or([{ userName }, { email }]);
+        const existingUser = await userModel.findOne({ userName });
         if (existingUser) {
             const errors = {};
             if (existingUser.userName === userName) {
                 errors.userName = 'Username already exists..!';
             }
-            if (existingUser.email === email) {
-                errors.email = 'Email already exists..!';
-            }
             return res.status(400).send({ errors });
         }
         /////////////////////////////
         const edituser = await userModel.findByIdAndUpdate(req.params.id, {
-            email,
             Name,
             userName,
-            password,
-            phoneNumber,
             address,
             isAdmin
         })
 
-        res.status(200).send(edituser)
+        res.status(200).send("User updated ..")
 
     } catch {
         next(customError({
