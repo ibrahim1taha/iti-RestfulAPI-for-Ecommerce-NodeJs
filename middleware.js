@@ -41,8 +41,6 @@ const authorized = async (req , res, next)=>{
 const UserAuthorized = async (req , res, next)=>{
     const{authorization : token} = req.headers  ;
     const decoded = await asyncverfiy(token , process.env.secretkey)
-    console.log(decoded.id)
-    console.log(req.params.id)
     if(decoded.id !== req.params.id){
         next(customError({
             statusCode : 401 , 
